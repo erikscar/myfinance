@@ -8,14 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.13.15" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="API\" />
     <Folder Include="Application\" />
+    <Folder Include="Application\Services\" />
     <Folder Include="Domain\Enums\" />
-    <Folder Include="Infrastrucutre\" />
-    <Folder Include="Infrastrucutre\Repositories\" />
+    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>
