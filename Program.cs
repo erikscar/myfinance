@@ -1,16 +1,26 @@
 using Microsoft.EntityFrameworkCore;
+using myfinance.Application.Services;
+using myfinance.Application.Services.Interfaces;
 using myfinance.Domain.Entities;
 using myfinance.Infrastructure.Context;
+using myfinance.Infrastructure.Repositories;
+using myfinance.Infrastructure.Repositories.Interfaces;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<MyfinanceContext>(options =>
+builder.Services.AddDbContext<MyFinanceContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyFinanceDatabase"));
 });
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -18,25 +28,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
-using(var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    var context = services.GetRequiredService<MyfinanceContext>();
-    context.Database.EnsureCreated();
-}
-
+app.MapControllers();
 app.UseHttpsRedirection();
-
-app.MapGet("/myfinance", (MyfinanceContext context) =>
-{
-    context.Add(new User { Name= "Erik Scarcela Araujo"});
-
-    context.SaveChanges();
-
-    return context.Users.ToList();  
-});
 
 app.Run();

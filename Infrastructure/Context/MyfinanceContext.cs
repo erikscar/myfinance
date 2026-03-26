@@ -4,7 +4,7 @@ using myfinance.Domain.Entities;
 
 namespace myfinance.Infrastructure.Context;
 
-public class MyfinanceContext(DbContextOptions<MyfinanceContext> options) : DbContext(options)
+public class MyFinanceContext(DbContextOptions<MyFinanceContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
 }
