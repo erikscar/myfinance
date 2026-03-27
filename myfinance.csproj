@@ -23,6 +23,7 @@
     <Folder Include="Application\" />
     <Folder Include="Application\Services\" />
     <Folder Include="Application\Services\Interfaces\" />
+    <Folder Include="Domain\DTOS\" />
     <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 

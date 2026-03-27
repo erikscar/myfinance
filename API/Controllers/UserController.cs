@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using myfinance.Application.Services.Interfaces;
+using myfinance.Domain.DTOS;
 
 namespace myfinance.API.Controllers
 {
@@ -13,6 +14,13 @@ namespace myfinance.API.Controllers
         public async Task<IActionResult> GetUsers()
         {
             return Ok(await _userService.GetUsersAsync());
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginDTO userData)
+        {
+            var teste = userData;
+            return Ok(userData);
         }
     }
 }
