@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using myfinance.API.Errors;
 using myfinance.Application.Services.Interfaces;
 using myfinance.Domain.Entities;
 using Microsoft.Extensions.Options;
 using myfinance.Infrastructure.Config;
+using myfinance.Domain.DTOS;
 
 namespace myfinance.Infrastructure.Services;
 
@@ -18,7 +18,7 @@ public class TokenService : ITokenService
     {
         _settings = settings;
     }
-    public async Task<string> GenerateJWT(int userId)
+    public async Task<TokenDTO> GenerateJWT(int userId)
     {
         var handler = new JwtSecurityTokenHandler();
         
@@ -29,12 +29,17 @@ public class TokenService : ITokenService
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
         };
 
-        var token = new JwtSecurityToken(
+        var jwtToken = new JwtSecurityToken(
             signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512),
             claims: claims,
             expires: DateTime.UtcNow.AddHours(2)
         );
-        
-        return handler.WriteToken(token);
+
+        TokenDTO token = new()
+        {
+            Token = handler.WriteToken(jwtToken)
+        };
+
+        return token;
     }
 }

@@ -1,12 +1,13 @@
 using System;
 using myfinance.Domain.DTOS;
 using myfinance.Domain.Entities;
+using myfinance.Shared.Results;
 
 namespace myfinance.Application.Services.Interfaces;
 
 public interface IUserService
 {
     Task<List<User>> GetUsersAsync();
-    Task<string> LoginUserAsync(LoginRequestDTO userData);
-    Task RegisterUserAsync(RegisterRequestDTO userData);
+    Task<Result<TokenDTO>> LoginUserAsync(LoginRequestDTO userData);
+    Task<Result<User>> RegisterUserAsync(RegisterRequestDTO userData);
 }

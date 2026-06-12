@@ -25,10 +25,12 @@ public class UserRepository : IUserRepository
         return await _myfinanceContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task CreateUserAsync(User user)
+    public async Task<User?> CreateUserAsync(User user)
     {
         await _myfinanceContext.Users.AddAsync(user);
 
         await _myfinanceContext.SaveChangesAsync();
+
+        return user;
     }
 }

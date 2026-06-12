@@ -4,6 +4,7 @@ using myfinance.Application.Services.Interfaces;
 using myfinance.Domain.DTOS;
 using myfinance.Domain.Entities;
 using myfinance.Infrastructure.Repositories.Interfaces;
+using myfinance.Shared.Results;
 
 namespace myfinance.Application.Services;
 
@@ -24,35 +25,33 @@ public class UserService(
         return users;
     }
 
-    public async Task<string> LoginUserAsync(LoginRequestDTO userData)
+    public async Task<Result<TokenDTO>> LoginUserAsync(LoginRequestDTO userData)
     {
         User user = await _userRepository.FindUserByEmail(userData.Email);
 
         if (user is null)
         {
-            throw new Exception("User does not exists");
+            return Result<TokenDTO>.Failure(Failure.UserNotFound);
         }
 
         bool isPasswordCorrect = _passwordService.Verify(userData.Password, user.PasswordHash);
 
-        if (!isPasswordCorrect) {
-            throw new Exception("Incorrect Password");
+        if (!isPasswordCorrect) 
+        {
+            return Result<TokenDTO>.Failure(Failure.PasswordIncorrect);
         }
 
-        return await _tokenService.GenerateJWT(user.Id);
+        TokenDTO token = await _tokenService.GenerateJWT(user.Id);
+
+        return Result<TokenDTO>.Success(token);
     }
 
-    public async Task RegisterUserAsync(RegisterRequestDTO userData)
+    public async Task<Result<User>> RegisterUserAsync(RegisterRequestDTO userData)
     {
         var password = _passwordService.Hash(userData.Password);
         
-        User user = new User(
-            userData.Name,
-            userData.Email,
-            password
-        );
-        
-        await _userRepository.CreateUserAsync(user);
-    }
+        User user = new(userData.Name, userData.Email, password);
 
+        return Result<User>.Success(await _userRepository.CreateUserAsync(user));
+    }
 }

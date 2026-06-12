@@ -11,7 +11,6 @@ namespace myfinance.API.Controllers
     public class UserController(IUserService userService, ITokenService tokenService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
-        private readonly ITokenService _tokenService = tokenService;
 
         [HttpGet("users")]
         [Authorize]
@@ -23,16 +22,19 @@ namespace myfinance.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> LoginUser([FromBody] LoginRequestDTO userData)
         {
-            string token = await _userService.LoginUserAsync(userData);
+            var result = await _userService.LoginUserAsync(userData);
 
-            Response.Cookies.Append("access_token", token, 
-            new CookieOptions 
-            { 
-                HttpOnly = true, 
-                SameSite = SameSiteMode.Lax, 
-                Secure = false, 
-                Expires = DateTime.UtcNow.AddHours(2) 
-            });
+            if(result.Value != null)
+            {
+                Response.Cookies.Append("access_token", result.Value.Token, 
+                new CookieOptions 
+                { 
+                    HttpOnly = true, 
+                    SameSite = SameSiteMode.Lax, 
+                    Secure = false, 
+                    Expires = DateTime.UtcNow.AddHours(2) 
+                });
+            }
 
             return Ok();
         } 
@@ -40,9 +42,9 @@ namespace myfinance.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterRequestDTO userData)
         {
-            await _userService.RegisterUserAsync(userData);     
+            var result = await _userService.RegisterUserAsync(userData);     
                         
-            return Ok();
+            return Ok(result);
         }
     }
 }
