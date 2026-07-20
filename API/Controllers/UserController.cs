@@ -39,12 +39,32 @@ namespace myfinance.API.Controllers
             return Ok();
         } 
 
+        [HttpPost("google")]
+        public async Task<ActionResult> LoginUserWithGoogle([FromForm] IFormCollection googleData)
+        {
+            var res = googleData["credential"];
+
+            return Ok();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterRequestDTO userData)
         {
             var result = await _userService.RegisterUserAsync(userData);     
+
+            if(result.Value != null)
+            {
+                Response.Cookies.Append("access_token", result.Value.Token, 
+                new CookieOptions 
+                { 
+                    HttpOnly = true, 
+                    SameSite = SameSiteMode.Lax, 
+                    Secure = false, 
+                    Expires = DateTime.UtcNow.AddHours(2) 
+                });
+            }
                         
-            return Ok(result);
+            return Ok();
         }
     }
 }

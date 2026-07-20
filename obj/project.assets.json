@@ -3231,11 +3231,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
+      "projectUniqueName": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
       "projectName": "myfinance",
-      "projectPath": "C:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
+      "projectPath": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
       "packagesPath": "C:\\Users\\earau\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\obj\\",
+      "outputPath": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3323,7 +3323,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -3740,5 +3740,17 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

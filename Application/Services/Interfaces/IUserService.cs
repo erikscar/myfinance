@@ -9,5 +9,5 @@ public interface IUserService
 {
     Task<List<User>> GetUsersAsync();
     Task<Result<TokenDTO>> LoginUserAsync(LoginRequestDTO userData);
-    Task<Result<User>> RegisterUserAsync(RegisterRequestDTO userData);
+    Task<Result<TokenDTO>> RegisterUserAsync(RegisterRequestDTO userData);
 }

@@ -10,9 +10,9 @@ public class User
     public DateTime UpdatedAt { get; private set;}
 
     public User() {}
-    public User(string name, string email, string passwordHash)
+    public User(string firstName, string lastName, string email, string passwordHash)
     {
-        Name = name;
+        Name = $"{firstName.Trim()} {lastName.Trim()}";
         Email = email;
         PasswordHash = passwordHash;
         CreatedAt = DateTime.UtcNow;

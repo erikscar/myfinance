@@ -46,12 +46,21 @@ public class UserService(
         return Result<TokenDTO>.Success(token);
     }
 
-    public async Task<Result<User>> RegisterUserAsync(RegisterRequestDTO userData)
+    public async Task<Result<TokenDTO>> RegisterUserAsync(RegisterRequestDTO userData)
     {
-        var password = _passwordService.Hash(userData.Password);
-        
-        User user = new(userData.Name, userData.Email, password);
+        string password = _passwordService.Hash(userData.Password);
 
-        return Result<User>.Success(await _userRepository.CreateUserAsync(user));
+        User user = new(userData.FirstName, userData.LastName, userData.Email, password);
+
+        var createdUser = await _userRepository.CreateUserAsync(user);
+
+        if (createdUser is null)
+        {
+            return Result<TokenDTO>.Failure(Failure.UserNotFound);
+        }
+
+        TokenDTO token = await _tokenService.GenerateJWT(createdUser.Id);
+
+        return Result<TokenDTO>.Success(token);
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "d4QSb4Y9KBk=",
+  "dgSpecHash": "hCexd6YVDlM=",
   "success": true,
   "projectFilePath": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
   "expectedPackageFiles": [
@@ -56,5 +56,18 @@
     "C:\\Users\\earau\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\earau\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
+      "warningLevel": 1,
+      "filePath": "c:\\Users\\earau\\OneDrive\\Desktop\\Projetos\\myfinance\\myfinance.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
