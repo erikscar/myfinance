@@ -29,17 +29,20 @@ public class UserService(
     {
         User user = await _userRepository.FindUserByEmail(userData.Email);
 
-        if (user is null)
+        if(user != null)
         {
-            return Result<TokenDTO>.Failure(Failure.UserNotFound);
+            bool isPasswordCorrect = _passwordService.Verify(userData.Password, user.PasswordHash);
+
+            if (user is null || !isPasswordCorrect) 
+            {
+                return Result<TokenDTO>.Failure(Failure.IncorrectCredentials);
+            }
+        }
+        else
+        {
+            return Result<TokenDTO>.Failure(Failure.IncorrectCredentials);
         }
 
-        bool isPasswordCorrect = _passwordService.Verify(userData.Password, user.PasswordHash);
-
-        if (!isPasswordCorrect) 
-        {
-            return Result<TokenDTO>.Failure(Failure.PasswordIncorrect);
-        }
 
         TokenDTO token = await _tokenService.GenerateJWT(user.Id);
 

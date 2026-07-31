@@ -8,7 +8,7 @@ namespace myfinance.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController(IUserService userService, ITokenService tokenService) : ControllerBase
+    public class UserController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
 
@@ -34,6 +34,11 @@ namespace myfinance.API.Controllers
                     Secure = false, 
                     Expires = DateTime.UtcNow.AddHours(2) 
                 });
+            }
+
+            if (result.IsFailure)
+            {
+               return BadRequest(result?.Error?.Message); 
             }
 
             return Ok();
